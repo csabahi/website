@@ -1,0 +1,288 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const libraryItems = await getCollection('library');
+libraryItems.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Group types for filtering
+const typeGroups = {
+  'reading': ['book', 'article'],
+  'listening': ['podcast', 'album'],
+  'other': ['other']
+} as const;
+
+function getTypeIcon(type: string) {
+  switch (type) {
+    case 'book': return '📚';
+    case 'article': return '📄';
+    case 'podcast': return '🎧';
+    case 'album': return '🎵';
+    default: return '💡';
+  }
+}
+
+function getGroupIcon(group: string) {
+  switch (group) {
+    case 'reading': return '📚';
+    case 'listening': return '🎧';
+    default: return '💡';
+  }
+}
+
+function getGroupLabel(group: string) {
+  switch (group) {
+    case 'reading': return 'Books & Articles';
+    case 'listening': return 'Podcasts & Albums';
+    default: return 'Other Cool Stuff';
+  }
+}
+---
+
+<Layout title="Library - Cool Things I've Found">
+  <main>
+    <h1>Library</h1>
+    <p class="subtitle">A collection of interesting things I've discovered.</p>
+
+    <div class="filters">
+      {Object.entries(typeGroups).map(([group, types]) => (
+        <button class="filter-btn" data-group={group} data-types={JSON.stringify(types)}>
+          {getGroupIcon(group)} {getGroupLabel(group)}
+        </button>
+      ))}
+    </div>
+
+    <div class="library-grid">
+      {libraryItems.map((item) => (
+        <div class="library-card" data-type={item.data.type}>
+          <div class="card-header">
+            {item.data.image && (
+              <img src={item.data.image} alt={item.data.title} class="item-image" />
+            )}
+            <div class="type-badge">
+              {getTypeIcon(item.data.type)} {item.data.type}
+            </div>
+          </div>
+          <div class="card-content">
+            <h2>{item.data.title}</h2>
+            <p class="author">by {item.data.author}</p>
+            {item.data.rating && (
+              <div class="rating">
+                {'★'.repeat(item.data.rating)}{'☆'.repeat(5 - item.data.rating)}
+              </div>
+            )}
+            <div class="tags">
+              {item.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            <div class="item-content">
+              <p>{item.body}</p>
+            </div>
+            {item.data.link && (
+              <a href={item.data.link} target="_blank" rel="noopener noreferrer" class="link-button">
+                Learn More
+              </a>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const libraryCards = document.querySelectorAll('.library-card');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const types = JSON.parse(button.getAttribute('data-types') || '[]');
+      
+      // Toggle active state of button
+      button.classList.toggle('active');
+      
+      // Get all active filters
+      const activeButtons = Array.from(filterButtons).filter(btn => btn.classList.contains('active'));
+      const activeTypes = activeButtons.flatMap(btn => 
+        JSON.parse(btn.getAttribute('data-types') || '[]')
+      );
+      
+      // Show all if no filters are active
+      if (activeTypes.length === 0) {
+        libraryCards.forEach(card => card.style.display = 'flex');
+        return;
+      }
+      
+      // Filter cards
+      libraryCards.forEach(card => {
+        const cardType = card.getAttribute('data-type');
+        card.style.display = activeTypes.includes(cardType) ? 'flex' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  main {
+    color: rgb(var(--text));
+  }
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: rgb(var(--accent-dark));
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin-bottom: 2rem;
+    color: rgb(var(--accent));
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+
+  .filter-btn {
+    background: rgba(var(--accent-dark), 0.1);
+    border: 1px solid rgba(var(--accent-light), 0.2);
+    color: rgb(var(--accent-dark));
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: rgb(var(--accent));
+    color: white;
+  }
+
+  .library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 1rem 0;
+  }
+
+  .library-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(var(--accent-dark), 0.1);
+    border: 1px solid rgba(var(--accent-light), 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .library-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-header {
+    position: relative;
+  }
+
+  .item-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .type-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(var(--background), 0.9);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: rgb(var(--accent-dark));
+    backdrop-filter: blur(4px);
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .card-content h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: rgb(var(--accent-dark));
+  }
+
+  .author {
+    font-size: 0.9rem;
+    color: rgb(var(--accent));
+    margin: 0;
+  }
+
+  .rating {
+    color: rgb(var(--accent));
+    font-size: 1.1rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    background: rgba(var(--accent-dark), 0.1);
+    padding: 0.2rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    color: rgb(var(--accent-dark));
+  }
+
+  .item-content {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .link-button {
+    display: inline-block;
+    background: rgb(var(--accent));
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-top: auto;
+    text-align: center;
+    transition: background-color 0.2s;
+  }
+
+  .link-button:hover {
+    background: rgb(var(--accent-dark));
+  }
+
+  @media (max-width: 768px) {
+    .library-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .filters {
+      gap: 0.3rem;
+    }
+
+    .filter-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>

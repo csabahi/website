@@ -8,7 +8,7 @@ projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 <Layout title="Projects - Engineering Portfolio">
 	<main>
-		<h1>My Projects</h1>
+		<h1>Projects</h1>
 		<div class="project-grid">
 			{projects.map((project) => (
 				<a href={`/projects/${project.slug}`} class="project-card">
@@ -34,22 +34,14 @@ projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 <style>
 	main {
-		margin: auto;
-		padding: 1rem;
-		width: 1200px;
-		max-width: calc(100% - 2rem);
-		color: white;
+		color: rgb(var(--text));
 	}
 	h1 {
-		font-size: 3rem;
+		font-size: clamp(2rem, 5vw, 3.5rem);
 		font-weight: 700;
 		text-align: center;
-		margin-bottom: 3rem;
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
+		margin-bottom: 2rem;
+		color: rgb(var(--accent-dark));
 	}
 	.project-grid {
 		display: grid;
@@ -101,6 +93,7 @@ projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 		margin: 0.5rem 0;
 		font-size: 1rem;
 		flex-grow: 1;
+		color: rgb(var(--text));
 	}
 	.tags {
 		display: flex;
@@ -113,5 +106,13 @@ projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 		padding: 0.2rem 0.8rem;
 		border-radius: 999px;
 		font-size: 0.8rem;
+		color: rgb(var(--accent-dark));
+	}
+
+	@media (max-width: 768px) {
+		.project-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
 	}
 </style>

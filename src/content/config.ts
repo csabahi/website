@@ -13,6 +13,22 @@ const projects = defineCollection({
   }),
 });
 
+const library = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    type: z.enum(['book', 'article', 'podcast', 'album', 'other']),
+    author: z.string(),
+    date: z.date(),
+    link: z.string().url().optional(),
+    tags: z.array(z.string()),
+    rating: z.number().min(1).max(5).optional(),
+    image: z.string().optional(),
+    featured: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   projects,
+  library,
 };
