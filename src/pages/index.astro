@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import ImageGallery from '../components/ImageGallery.astro';
+import Timeline from '../components/Timeline.astro';
+
+const projects = await getCollection('projects');
+projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const featuredImages = [
+  '/path-to-image1.jpg',
+  '/path-to-image2.jpg',
+  '/path-to-image3.jpg'
+];
+
+const timelineEvents = [
+  {
+    date: 'June 2023',
+    title: 'Summer Internship',
+    description: 'Software Engineering Intern at Example Corp'
+  },
+  {
+    date: 'May 2023',
+    title: 'Academic Achievement',
+    description: 'Dean\'s List - Spring 2023'
+  }
+];
+
+const internships = [
+  'Software Engineering Intern at Example Corp (Summer 2023)',
+  'Research Assistant at University Lab (Spring 2023)',
+  'Technical Intern at Tech Company (Summer 2022)'
+];
+---
+
+<Layout title="Engineering Portfolio">
+	<main>
+		<section class="hero">
+			<h1>Welcome to My Portfolio</h1>
+			<p class="subtitle">Engineering Student & Problem Solver</p>
+		</section>
+
+		<section class="featured-images">
+			<ImageGallery images={featuredImages} />
+		</section>
+
+		<section class="about">
+			<h2>About Me</h2>
+			<div class="about-content">
+				<div class="about-text">
+					<p>
+						I am a passionate engineering student with a focus on innovative solutions
+						and practical applications. My journey in engineering has led me to explore
+						various technologies and methodologies, always striving to learn and grow.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="projects">
+			<h2>Featured Projects</h2>
+			<div class="project-grid">
+				{projects.map((project) => (
+					<a href={`/projects/${project.slug}`} class="project-card">
+						<div class="image-container">
+							{project.data.image && (
+								<img src={project.data.image} alt={project.data.title} />
+							)}
+						</div>
+						<div class="project-content">
+							<h3>{project.data.title}</h3>
+							<p>{project.data.description}</p>
+							<div class="tags">
+								{project.data.tags.map((tag) => (
+									<span class="tag">{tag}</span>
+								))}
+							</div>
+						</div>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<section class="experience">
+			<h2>Professional Experience</h2>
+			<ul class="experience-list">
+				{internships.map(internship => (
+					<li>{internship}</li>
+				))}
+			</ul>
+		</section>
+
+		<section class="timeline-section">
+			<h2>My Journey</h2>
+			<Timeline events={timelineEvents} />
+		</section>
+	</main>
+</Layout>
+
+<style>
+	main {
+		color: rgb(var(--text));
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	.hero {
+		text-align: center;
+		padding: 4rem 0 1rem;
+	}
+	h1 {
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		font-weight: 700;
+		line-height: 1.2;
+		margin-bottom: 1rem;
+		color: rgb(var(--accent-dark));
+	}
+	.subtitle {
+		font-size: clamp(1.2rem, 3vw, 1.5rem);
+		color: rgb(var(--accent-dark));
+	}
+	.featured-images {
+		margin: 1rem auto;
+		max-width: 1000px;
+		width: 100%;
+	}
+	.about {
+		margin: 2rem 0;
+		width: 100%;
+	}
+	.about-content {
+		background: rgba(var(--accent-dark), 0.2);
+		border: 1px solid rgba(var(--accent-light), 0.2);
+		border-radius: 8px;
+		padding: 1.5rem;
+		margin: 0 auto;
+		width: 100%;
+		max-width: 1000px;
+	}
+	.about-text {
+		text-align: center;
+	}
+	.about-text p {
+		margin: 0;
+		font-size: clamp(1rem, 2vw, 1.1rem);
+		color: rgb(var(--text));
+	}
+	.experience {
+		margin: 4rem 0;
+		width: 100%;
+	}
+	.experience-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		font-size: clamp(0.9rem, 2vw, 1.1rem);
+	}
+	.experience-list li {
+		position: relative;
+		padding-left: 1.5rem;
+		margin-bottom: 1rem;
+		color: rgb(var(--accent-dark));
+	}
+	.experience-list li::before {
+		content: "•";
+		position: absolute;
+		left: 0;
+		color: rgb(var(--accent));
+	}
+	.projects {
+		margin-top: 4rem;
+		width: 100%;
+	}
+	h2 {
+		font-size: clamp(1.8rem, 4vw, 2.5rem);
+		font-weight: 700;
+		margin-bottom: 2rem;
+		text-align: center;
+		color: rgb(var(--accent-dark));
+	}
+	.project-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 2rem;
+		width: 100%;
+	}
+	.project-card {
+		background: rgba(var(--accent-dark), 0.2);
+		border: 1px solid rgba(var(--accent-light), 0.2);
+		border-radius: 8px;
+		overflow: hidden;
+		text-decoration: none;
+		color: rgb(var(--text));
+		transition: transform 0.2s;
+		aspect-ratio: 1;
+		display: flex;
+		flex-direction: column;
+	}
+	.project-card:hover {
+		transform: translateY(-5px);
+	}
+	.image-container {
+		width: 100%;
+		height: 50%;
+		overflow: hidden;
+	}
+	.image-container img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s;
+	}
+	.project-card:hover .image-container img {
+		transform: scale(1.05);
+	}
+	.project-content {
+		padding: 1.5rem;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+	}
+	.project-content h3 {
+		margin: 0;
+		font-size: clamp(1.1rem, 2vw, 1.25rem);
+		color: rgb(var(--accent-dark));
+	}
+	.project-content p {
+		margin: 0.5rem 0;
+		font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+		flex-grow: 1;
+		color: rgb(var(--text));
+	}
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: auto;
+	}
+	.tag {
+		background: rgba(var(--accent-dark), 0.2);
+		padding: 0.2rem 0.8rem;
+		border-radius: 999px;
+		font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+		color: rgb(var(--accent-dark));
+	}
+
+	@media (max-width: 768px) {
+		.project-grid {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+		.project-card {
+			aspect-ratio: auto;
+		}
+		.image-container {
+			height: 200px;
+		}
+	}
+</style>

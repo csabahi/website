@@ -1,0 +1,99 @@
+---
+interface TimelineEvent {
+  date: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  events: TimelineEvent[];
+}
+
+const { events } = Astro.props;
+---
+
+<div class="timeline">
+  {events.map((event) => (
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <div class="date">{event.date}</div>
+        <h3>{event.title}</h3>
+        <p>{event.description}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem 0;
+  }
+  
+  .timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background: rgb(var(--accent));
+    top: 0;
+    bottom: 0;
+    left: 31px;
+    margin-left: -2px;
+  }
+  
+  .timeline-item {
+    padding: 10px 30px;
+    position: relative;
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+  
+  .timeline-content {
+    padding: 1rem;
+    background: rgba(var(--accent-dark), 0.2);
+    border: 1px solid rgba(var(--accent-light), 0.2);
+    border-radius: 8px;
+    position: relative;
+    font-size: 0.9rem;
+  }
+  
+  .timeline-content::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: rgb(var(--accent));
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -47px;
+    z-index: 1;
+  }
+  
+  .date {
+    color: rgb(var(--accent-light));
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  h3 {
+    margin: 0 0 0.3rem 0;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  p {
+    margin: 0;
+    line-height: 1.4;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    .timeline {
+      padding-left: 0;
+    }
+  }
+</style>

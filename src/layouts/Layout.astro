@@ -1,0 +1,95 @@
+---
+import Navigation from '../components/Navigation.astro';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Engineering Portfolio" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+	</head>
+	<body>
+		<Navigation />
+		<div class="content-wrapper">
+			<slot />
+		</div>
+	</body>
+</html>
+<style is:global>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 98, 47, 181;
+		--accent-dark: 49, 10, 101;
+		--background: 245, 241, 235;
+		--text: 51, 41, 46;
+		--card-bg: 238, 234, 228;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			rgb(var(--background)) 60%
+		);
+	}
+	html {
+		font-family: system-ui, sans-serif;
+		background: rgb(var(--background));
+		scroll-behavior: smooth;
+		width: 100%;
+		overflow-x: hidden;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+		color: rgb(var(--text));
+		width: 100%;
+		overflow-x: hidden;
+		box-sizing: border-box;
+	}
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+	.content-wrapper {
+		padding-top: 5rem;
+		width: 100%;
+		overflow-x: hidden;
+	}
+	main {
+		width: 100% !important;
+		max-width: 1200px !important;
+		margin: 0 auto !important;
+		padding: 1rem !important;
+		overflow-x: hidden !important;
+	}
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+	code {
+		font-family:
+			Menlo,
+			Monaco,
+			Lucida Console,
+			Liberation Mono,
+			DejaVu Sans Mono,
+			Bitstream Vera Sans Mono,
+			Courier New,
+			monospace;
+	}
+	@media (max-width: 768px) {
+		main {
+			padding: 1rem 0.5rem !important;
+		}
+		.content-wrapper {
+			padding-top: 4rem;
+		}
+	}
+</style>

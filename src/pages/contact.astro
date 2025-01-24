@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact - Engineering Portfolio">
+	<main>
+		<h1>Get in Touch</h1>
+		
+		<div class="contact-grid">
+			<div class="contact-card">
+				<h2>Email</h2>
+				<p>Feel free to reach out to me directly:</p>
+				<a href="mailto:your.email@example.com" class="email-button">
+					your.email@example.com
+				</a>
+			</div>
+
+			<div class="contact-card">
+				<h2>Professional Profiles</h2>
+				<div class="social-links">
+					<a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="social-button">
+						GitHub Profile
+					</a>
+					<a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="social-button">
+						LinkedIn Profile
+					</a>
+				</div>
+			</div>
+
+			<div class="contact-card">
+				<h2>Personal Profiles</h2>
+				<div class="social-links">
+					<a href="https://www.strava.com/athletes/yourusername" target="_blank" rel="noopener noreferrer" class="social-button">
+						Strava Profile
+					</a>
+					<a href="https://open.spotify.com/user/yourusername" target="_blank" rel="noopener noreferrer" class="social-button">
+						Spotify Profile
+					</a>
+				</div>
+			</div>
+
+			<div class="contact-card">
+				<h2>Resume</h2>
+				<p>Download my resume to learn more about my experience and skills.</p>
+				<a href="/path-to-your-resume.pdf" download class="download-button">
+					Download Resume (PDF)
+				</a>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 1200px;
+		max-width: calc(100% - 2rem);
+		color: rgb(var(--text));
+		font-size: 16px;
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: 2.5rem;
+		font-weight: 700;
+		text-align: center;
+		margin-bottom: 2rem;
+		color: rgb(var(--accent-dark));
+	}
+	.contact-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(250px, 350px));
+		gap: 1.5rem;
+		padding: 1rem 0;
+		max-width: 800px;
+		margin: 0 auto;
+		justify-content: center;
+	}
+	.contact-card {
+		background: rgba(var(--accent-dark), 0.2);
+		border: 1px solid rgba(var(--accent-light), 0.2);
+		border-radius: 8px;
+		padding: 1.5rem;
+		text-align: center;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+	.contact-card h2 {
+		color: rgb(var(--accent-dark));
+		margin: 0;
+		font-size: 1.25rem;
+	}
+	.contact-card p {
+		margin: 0;
+		font-size: 0.9rem;
+	}
+	.social-links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+	.social-button, .download-button, .email-button {
+		background: rgb(var(--accent));
+		color: white;
+		padding: 0.6rem 1rem;
+		border-radius: 4px;
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: background-color 0.2s;
+		display: inline-block;
+	}
+	.social-button:hover, .download-button:hover, .email-button:hover {
+		background: rgb(var(--accent-dark));
+	}
+	@media (max-width: 768px) {
+		.contact-grid {
+			grid-template-columns: 1fr;
+			max-width: 350px;
+		}
+		main {
+			font-size: 14px;
+		}
+		h1 {
+			font-size: 2rem;
+		}
+	}
+</style>
