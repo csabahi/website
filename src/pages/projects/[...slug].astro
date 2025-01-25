@@ -32,11 +32,13 @@ const { Content } = await entry.render();
       </header>
 
       {entry.data.image && (
-        <img 
-          src={entry.data.image} 
-          alt={entry.data.title}
-          class="featured-image"
-        />
+        <div class="image-container">
+          <img 
+            src={entry.data.image} 
+            alt={entry.data.title}
+            loading="eager"
+          />
+        </div>
       )}
 
       <div class="links">
@@ -89,12 +91,22 @@ const { Content } = await entry.render();
     align-items: center;
     font-size: 0.9rem;
   }
-  .featured-image {
+  .image-container {
+    position: relative;
     width: 100%;
-    max-height: 400px;
-    object-fit: cover;
+    max-width: 800px;
+    margin: 2rem auto;
     border-radius: 8px;
-    margin: 2rem 0;
+    overflow: hidden;
+    background-color: rgba(var(--accent-dark), 0.1);
+  }
+  .image-container img {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
   }
   .tags {
     display: flex;

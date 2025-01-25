@@ -8,13 +8,62 @@ const { images } = Astro.props;
 
 <div class="gallery-container">
   <div class="gallery-grid">
-    {images.map((image, index) => (
-      <div class="gallery-image">
-        <img src={image} alt={`Gallery image ${index + 1}`} />
+    {[0, 1, 2].map((frameIndex) => (
+      <div class="gallery-frame">
+        <div class="image-stack">
+          {images.map((image, imageIndex) => (
+            <img 
+              src={image} 
+              alt={`Gallery image ${imageIndex + 1}`}
+              class="gallery-image"
+              data-index={imageIndex}
+              loading="eager"
+              decoding="sync"
+              fetchpriority="high"
+            />
+          ))}
+        </div>
       </div>
     ))}
   </div>
 </div>
+
+<script>
+  const frames = document.querySelectorAll('.gallery-frame');
+  const images = document.querySelectorAll('.gallery-image');
+  const totalImages = Math.floor(images.length / 3);
+  let currentIndex = 0;
+
+  // Preload images
+  images.forEach((img) => {
+    if (img instanceof HTMLImageElement) {
+      const imageLoader = new Image();
+      imageLoader.src = img.src;
+    }
+  });
+
+  function updateImages() {
+    frames.forEach((frame, frameIndex) => {
+      const images = frame.querySelectorAll('.gallery-image');
+      const imageIndex = (currentIndex + frameIndex) % totalImages;
+      
+      images.forEach((img, idx) => {
+        (img as HTMLElement).style.opacity = idx === imageIndex ? '1' : '0';
+      });
+    });
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % totalImages;
+    updateImages();
+  }
+
+  // Show initial images
+  updateImages();
+
+  // Start cycling with longer interval
+  setInterval(nextImage, 4000);
+</script>
 
 <style>
   .gallery-container {
@@ -30,22 +79,34 @@ const { images } = Astro.props;
     aspect-ratio: 16/4;
   }
 
-  .gallery-image {
+  .gallery-frame {
+    position: relative;
     width: 100%;
     height: 100%;
     border-radius: 8px;
     overflow: hidden;
+    background: rgb(var(--accent-dark), 0.1);
   }
 
-  .gallery-image img {
+  .image-stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gallery-image {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .gallery-image:hover img {
-    transform: scale(1.05);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    transform: scale(1.01); /* Prevents potential edge flickering */
+    will-change: opacity; /* Optimize for opacity animations */
+    -webkit-backface-visibility: hidden; /* Reduce potential flickering */
+    backface-visibility: hidden;
   }
 
   @media (max-width: 768px) {
@@ -54,7 +115,7 @@ const { images } = Astro.props;
       aspect-ratio: auto;
     }
     
-    .gallery-image {
+    .gallery-frame {
       aspect-ratio: 16/9;
     }
   }

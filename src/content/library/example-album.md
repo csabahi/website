@@ -1,18 +1,18 @@
 ---
-title: "Blue Train"
+title: "AAA"
 type: "album"
-author: "John Coltrane"
-date: 2024-01-14
-tags: ["jazz", "instrumental", "saxophone"]
+author: "HYUKOH and Sunset Rollercoaster"
+date: 2024-10-13
+tags: ["Japanese Indie", "Psychedelic/Soft Rock"]
 rating: 5
-image: "https://upload.wikimedia.org/wikipedia/en/3/3c/Blue_Train.jpg"
+image: "https://i.scdn.co/image/ab67616d0000b2738c20a529bcd2c5e7367d7f3a"
 featured: true
-link: "https://open.spotify.com/album/6r0Q9CeM05nrFk7UMxpxTW"
+link: "https://open.spotify.com/album/1tEu6qNPURb0YfjaRDK23w?si=YIN2puJSRSKWwrgWAEOPUQ"
 ---
 
-A masterpiece of hard bop jazz that showcases Coltrane's innovative approach to improvisation and composition. The album's title track is particularly notable for its complex harmonic structure and memorable melody.
+This album was a collaboration between indie rock Korean band, HYUKOH, and Taiwanese psychedelic soft rock band, Sunset Rollercoaster. I truly loved the collaboration and harmonious mix of these 2 bands styles. The emotions of this album speak words and I would recommend everyone to listen to this. The 8 songs over 40minutes was a musical experience I don't hear often
 
 Key tracks:
-- Blue Train
-- Moment's Notice
-- Locomotion
+- Y
+- Young Man
+- Glue

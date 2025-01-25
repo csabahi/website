@@ -8,36 +8,51 @@ const projects = await getCollection('projects');
 projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const featuredImages = [
-  '/path-to-image1.jpg',
-  '/path-to-image2.jpg',
-  '/path-to-image3.jpg'
+  '/gallery/bhf1.JPG',
+  '/gallery/engDay.JPG',
+  '/gallery/stressTest.jpg',
+  '/gallery/musashi1.jpg',
+  '/gallery/windmill.jpg',
+  '/gallery/musashi2.jpg',
+  '/gallery/goats.jpg',
+  '/gallery/bhf2.JPG'
 ];
 
 const timelineEvents = [
   {
-    date: 'June 2023',
-    title: 'Summer Internship',
-    description: 'Software Engineering Intern at Example Corp'
+    date: 'May 2024',
+    title: 'Biked Around Netherlands',
+    description: 'Spent 5 days cycling around the Netherlands, exploring the beautiful towns and countryside.'
   },
   {
-    date: 'May 2023',
-    title: 'Academic Achievement',
-    description: 'Dean\'s List - Spring 2023'
+    date: 'June 2022',
+    title: 'Ride to Conquer Cancer',
+    description: 'Rode 220km over 2 days between Toronto and Niagara, raising $1,500 and awareness for cancer research'
+  },
+  {
+	date: 'May 2022',
+	title: 'Graduation Award from York Mills Collegiate Institute',
+	description: 'Sole recipient of the "Excellence in Education" award for academic achievement and leadership'
+  },
+  {
+	date: 'May 2020',
+	title: 'Silver Medalist at <a href="https://www.utsc.utoronto.ca/programs/torontosciencefair/silver-medals/" target="_blank" rel="noopener noreferrer">Toronto Science Fair</a>',
+	description: 'Awarded silver medal for my study regarding the negative effects of vehicle emissions on plant growth'
   }
 ];
 
 const internships = [
-  'Software Engineering Intern at Example Corp (Summer 2023)',
-  'Research Assistant at University Lab (Spring 2023)',
-  'Technical Intern at Tech Company (Summer 2022)'
+  'Robotics Engineering Intern @ BH Frontier Solutions (Fall 2024)',
+  'Optical Systems Engineering Intern @ Musashi AI (Winter 2024)',
+  'R&D Engineering Intern @ Bend All Automotive (Summer 2023)'
 ];
 ---
 
-<Layout title="Engineering Portfolio">
+<Layout title="Hey! I'm Camron">
 	<main>
 		<section class="hero">
-			<h1>Welcome to My Portfolio</h1>
-			<p class="subtitle">Engineering Student & Problem Solver</p>
+			<h1>Hey there! I'm Camron</h1>
+			<p class="subtitle">Engineering Student & Robotics Enthusiast</p>
 		</section>
 
 		<section class="featured-images">
@@ -49,8 +64,9 @@ const internships = [
 			<div class="about-content">
 				<div class="about-text">
 					<p>
+						I am an avid cyclist, snowboarder, and Arsenal F.C Fan!
 						I am a passionate engineering student with a focus on innovative solutions
-						and practical applications. My journey in engineering has led me to explore
+						and practical applications - particularly robotics solutions. My journey in engineering has led me to explore
 						various technologies and methodologies, always striving to learn and grow.
 					</p>
 				</div>

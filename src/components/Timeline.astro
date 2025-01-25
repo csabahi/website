@@ -17,8 +17,8 @@ const { events } = Astro.props;
     <div class="timeline-item">
       <div class="timeline-content">
         <div class="date">{event.date}</div>
-        <h3>{event.title}</h3>
-        <p>{event.description}</p>
+        <h3 set:html={event.title}></h3>
+        <p set:html={event.description}></p>
       </div>
     </div>
   ))}
@@ -89,6 +89,16 @@ const { events } = Astro.props;
     margin: 0;
     line-height: 1.4;
     font-size: 0.9rem;
+  }
+
+  h3 :global(a), p :global(a) {
+    color: rgb(var(--accent-light));
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  h3 :global(a:hover), p :global(a:hover) {
+    color: rgb(var(--accent));
   }
   
   @media (max-width: 768px) {
